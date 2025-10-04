@@ -19,8 +19,24 @@
         const REDIRECT_URL = 'https://kleiber.ru/cheesecase?utm_source=presentation&utm_medium=qr&utm_campaign=cheesecase_talk';
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec';
 
+        // Extract URL parameters
+        function getUrlParams() {
+            const params = {};
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Collect all URL parameters
+            for (const [key, value] of urlParams.entries()) {
+                params[key] = value;
+            }
+            
+            return params;
+        }
+
         // Collect all available user data
         function collectUserData() {
+            // Get URL parameters first
+            const urlParams = getUrlParams();
+            
             const data = {
                 // Timestamp
                 timestamp: new Date().toISOString(),
@@ -72,8 +88,16 @@
                 os: getOS(),
                 
                 // Browser name
-                browser: getBrowser()
+                browser: getBrowser(),
+                
+                // Custom URL parameters (with prefix to identify them)
+                customParams: JSON.stringify(urlParams)
             };
+            
+            // Add individual custom parameters with prefix
+            Object.keys(urlParams).forEach(key => {
+                data['custom_' + key] = urlParams[key];
+            });
             
             return data;
         }
