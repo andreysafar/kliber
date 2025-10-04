@@ -21,9 +21,16 @@
 const SCRIPT_URL = 'https://script.google.com/macros/s/ВАШ_ID/exec';
 ```
 
-### 3. Загрузи файлы
-- Загрузи `index.html` в GitHub
-- Используй ссылку: `https://твойлогин.github.io/репозиторий/`
+### 3. Скачай файлы
+📁 **[index.html](https://github.com/andreysafar/kliber/blob/main/index.html)** - страница отслеживания
+📁 **[script.gs](https://github.com/andreysafar/kliber/blob/main/script.gs)** - код для Google Apps Script
+
+Или скопируй код напрямую:
+📋 **[index.html сырой код](https://raw.githubusercontent.com/andreysafar/kliber/main/index.html)**
+📋 **[script.gs сырой код](https://raw.githubusercontent.com/andreysafar/kliber/main/script.gs)**
+
+### 4. Загрузи в репозиторий
+Используй ссылку: `https://andreysafar.github.io/kliber/`
 
 ## 📧 Что делает система
 
