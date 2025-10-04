@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перенаправление...</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        // Target redirect URL
+        const REDIRECT_URL = 'https://kleiber.ru/cheesecase?utm_source=presentation&utm_medium=qr&utm_campaign=cheesecase_talk';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec';
+
+        // Extract URL parameters
+        function getUrlParams() {
+            const params = {};
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Collect all URL parameters
+            for (const [key, value] of urlParams.entries()) {
+                params[key] = value;
+            }
+            
+            return params;
+        }
+
+        // Collect all available user data
+        function collectUserData() {
+            // Get URL parameters first
+            const urlParams = getUrlParams();
+            
+            const data = {
+                // Timestamp
+                timestamp: new Date().toISOString(),
+                
+                // Browser info
+                userAgent: navigator.userAgent || '',
+                language: navigator.language || '',
+                languages: (navigator.languages || []).join(', '),
+                platform: navigator.platform || '',
+                vendor: navigator.vendor || '',
+                
+                // Screen info
+                screenWidth: screen.width || 0,
+                screenHeight: screen.height || 0,
+                screenColorDepth: screen.colorDepth || 0,
+                screenPixelDepth: screen.pixelDepth || 0,
+                
+                // Window info
+                windowWidth: window.innerWidth || 0,
+                windowHeight: window.innerHeight || 0,
+                
+                // Device info
+                devicePixelRatio: window.devicePixelRatio || 1,
+                touchPoints: navigator.maxTouchPoints || 0,
+                
+                // Browser features
+                cookiesEnabled: navigator.cookieEnabled ? 'Yes' : 'No',
+                doNotTrack: navigator.doNotTrack || '',
+                onLine: navigator.onLine ? 'Yes' : 'No',
+                
+                // Location info
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+                timezoneOffset: new Date().getTimezoneOffset(),
+                
+                // Page info
+                referrer: document.referrer || '',
+                currentUrl: window.location.href || '',
+                
+                // Additional info
+                hardwareConcurrency: navigator.hardwareConcurrency || '',
+                deviceMemory: navigator.deviceMemory || '',
+                connection: navigator.connection ? 
+                    `${navigator.connection.effectiveType || ''} (${navigator.connection.downlink || ''}Mbps)` : '',
+                
+                // Mobile detection
+                isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Yes' : 'No',
+                
+                // OS detection
+                os: getOS(),
+                
+                // Browser name
+                browser: getBrowser(),
+                
+                // Custom URL parameters (with prefix to identify them)
+                customParams: JSON.stringify(urlParams)
+            };
+            
+            // Add individual custom parameters with prefix
+            Object.keys(urlParams).forEach(key => {
+                data['custom_' + key] = urlParams[key];
+            });
+            
+            return data;
+        }
+
+        // Detect OS
+        function getOS() {
+            const ua = navigator.userAgent;
+            if (ua.indexOf('Win') !== -1) return 'Windows';
+            if (ua.indexOf('Mac') !== -1) return 'MacOS';
+            if (ua.indexOf('Linux') !== -1) return 'Linux';
+            if (ua.indexOf('Android') !== -1) return 'Android';
+            if (ua.indexOf('iOS') !== -1 || ua.indexOf('iPhone') !== -1 || ua.indexOf('iPad') !== -1) return 'iOS';
+            return 'Unknown';
+        }
+
+        // Detect Browser
+        function getBrowser() {
+            const ua = navigator.userAgent;
+            if (ua.indexOf('Firefox') !== -1) return 'Firefox';
+            if (ua.indexOf('Chrome') !== -1 && ua.indexOf('Edg') === -1) return 'Chrome';
+            if (ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1) return 'Safari';
+            if (ua.indexOf('Edg') !== -1) return 'Edge';
+            if (ua.indexOf('Opera') !== -1 || ua.indexOf('OPR') !== -1) return 'Opera';
+            return 'Unknown';
+        }
+
+        // Send data to Google Apps Script
+        async function sendData() {
+            const userData = collectUserData();
+            
+            // Create URL with query parameters
+            const params = new URLSearchParams(userData);
+            const urlWithParams = `${SCRIPT_URL}?${params.toString()}`;
+            
+            try {
+                // Send data using img tag (works with CORS restrictions)
+                const img = new Image();
+                img.src = urlWithParams;
+                
+                // Also try fetch for better reliability
+                fetch(urlWithParams, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                }).catch(() => {
+                    // Ignore errors - img fallback will work
+                });
+                
+            } catch (error) {
+                console.error('Error sending data:', error);
+            }
+        }
+
+        // Redirect function
+        function redirect() {
+            // Try multiple redirect methods for maximum compatibility
+            try {
+                window.location.replace(REDIRECT_URL);
+            } catch (e) {
+                try {
+                    window.location.href = REDIRECT_URL;
+                } catch (e2) {
+                    // Fallback to manual click
+                    document.getElementById('manualLink').click();
+                }
+            }
+        }
+
+        // Main execution
+        (async function() {
+            try {
+                // Send data
+                await sendData();
+                
+                // Wait a bit to ensure data is sent, then redirect
+                setTimeout(() => {
+                    redirect();
+                }, 800);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                // Redirect anyway after error
+                setTimeout(() => {
+                    redirect();
+                }, 1000);
+            }
+        })();
+    </script>
+</body>
+</html>
