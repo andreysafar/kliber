@@ -24,12 +24,12 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwex
 ```
 
 ### 3. Скачай файлы
-📁 **[index.html](https://github.com/andreysafar/kliber/blob/prod/index.html)** - страница отслеживания
-📁 **[script.gs](https://github.com/andreysafar/kliber/blob/prod/script.gs)** - код для Google Apps Script
+📁 **[index.html](https://github.com/andreysafar/kliber/blob/Prod/index.html)** - страница отслеживания
+📁 **[script.gs](https://github.com/andreysafar/kliber/blob/Prod/script.gs)** - код для Google Apps Script
 
 Или скопируй код напрямую:
-📋 **[index.html сырой код](https://raw.githubusercontent.com/andreysafar/kliber/prod/index.html)**
-📋 **[script.gs сырой код](https://raw.githubusercontent.com/andreysafar/kliber/prod/script.gs)**
+📋 **[index.html сырой код](https://raw.githubusercontent.com/andreysafar/kliber/Prod/index.html)**
+📋 **[script.gs сырой код](https://raw.githubusercontent.com/andreysafar/kliber/Prod/script.gs)**
 
 ### 4. Готовая ссылка
 Используй: **`https://andreysafar.github.io/kliber/`** (эта ссылка уже работает сейчас)
