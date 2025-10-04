@@ -24,15 +24,17 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwex
 ```
 
 ### 3. Скачай файлы
-📁 **[index.html](https://github.com/andreysafar/kliber/blob/main/index.html)** - страница отслеживания
-📁 **[script.gs](https://github.com/andreysafar/kliber/blob/main/script.gs)** - код для Google Apps Script
+📁 **[index.html](https://github.com/andreysafar/kliber/blob/prod/index.html)** - страница отслеживания
+📁 **[script.gs](https://github.com/andreysafar/kliber/blob/prod/script.gs)** - код для Google Apps Script
 
 Или скопируй код напрямую:
-📋 **[index.html сырой код](https://raw.githubusercontent.com/andreysafar/kliber/main/index.html)**
-📋 **[script.gs сырой код](https://raw.githubusercontent.com/andreysafar/kliber/main/script.gs)**
+📋 **[index.html сырой код](https://raw.githubusercontent.com/andreysafar/kliber/prod/index.html)**
+📋 **[script.gs сырой код](https://raw.githubusercontent.com/andreysafar/kliber/prod/script.gs)**
 
 ### 4. Готовая ссылка
-Используй: **`https://andreysafar.github.io/kliber/`**
+Используй: **`https://andreysafar.github.io/kliber/`** (эта ссылка уже работает сейчас)
+
+— Открывается минимальная страница, которая собирает данные и сразу перенаправляет.
 
 ## 📧 Что делает система
 
@@ -42,6 +44,16 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwex
 ✅ **Делает редирект** на целевую страницу незаметно
 
 ## 🎨 Использование
+
+### Что уже настроено (работает из коробки)
+- Ссылка: `https://andreysafar.github.io/kliber/`
+- Отправка данных в таблицу через `SCRIPT_URL` (см. выше)
+- Email-уведомления на `anastasiyaanastasiya510@gmail.com`
+
+### Что можно поменять вручную
+- В `index.html` можно добавить свои параметры в ссылку (после `?`)
+- В `script.gs` можно изменить получателя писем в `EMAIL_TO`
+- Можно сократить длинные ссылки через Bitly/TinyURL и использовать их в QR
 
 ### Простая ссылка
 ```html
