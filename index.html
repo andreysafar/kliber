@@ -6,10 +6,12 @@
     <title>Редирект на Kleiber.ru</title>
     <meta http-equiv="refresh" content="0;url=https://kleiber.ru/cheesecase?utm_source=presentation&utm_medium=qr&utm_campaign=cheesecase_talk">
     <script>
-        // Функция логирования клика в Google Apps Script
+        // Функция асинхронного логирования клика
         async function logClick(targetUrl, timestamp, userAgent, referrer) {
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec', {
+                const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec';
+
+                const response = await fetch(appsScriptUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -26,10 +28,40 @@
                 if (response.ok) {
                     console.log('Данные клика записаны в Google Sheets');
                 } else {
-                    console.log('Ошибка записи данных:', response.status);
+                    console.log('Ошибка записи данных:', response.status, await response.text());
                 }
             } catch (error) {
                 console.log('Ошибка отправки данных:', error);
+            }
+        }
+
+        // Функция синхронного логирования клика
+        function logClickSync(targetUrl, timestamp, userAgent, referrer) {
+            try {
+                const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec';
+
+                // Создаем синхронный XMLHttpRequest
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', appsScriptUrl, false); // false = синхронный
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                const params = new URLSearchParams({
+                    action: 'log_click',
+                    timestamp: timestamp,
+                    target: targetUrl,
+                    userAgent: userAgent,
+                    referrer: referrer
+                });
+
+                xhr.send(params.toString());
+
+                if (xhr.status === 200) {
+                    console.log('Данные клика записаны синхронно');
+                } else {
+                    console.log('Ошибка синхронной записи:', xhr.status, xhr.responseText);
+                }
+            } catch (error) {
+                console.log('Ошибка синхронной отправки данных:', error);
             }
         }
 
@@ -39,8 +71,8 @@
         const referrer = document.referrer || 'Прямой переход';
         const targetUrl = 'https://kleiber.ru/cheesecase?utm_source=presentation&utm_medium=qr&utm_campaign=cheesecase_talk';
 
-        // Логируем клик (асинхронно, не блокируя редирект)
-        logClick(targetUrl, timestamp, userAgent, referrer);
+        // Логируем клик синхронно с помощью XMLHttpRequest
+        logClickSync(targetUrl, timestamp, userAgent, referrer);
 
         // Немедленный редирект
         window.location.href = targetUrl;
