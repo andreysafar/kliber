@@ -6,61 +6,13 @@
     <title>Перенаправление...</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        .container {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            margin: 20px auto;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 24px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: transform 0.2s;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
+            padding: 0;
+            background: #ffffff;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Загрузка...</h2>
-        <div class="spinner"></div>
-        <p>Пожалуйста, подождите. Вы будете перенаправлены автоматически.</p>
-        <a href="https://kleiber.ru/cheesecase?utm_source=presentation&utm_medium=qr&utm_campaign=cheesecase_talk" class="btn" id="manualLink">
-            Перейти вручную
-        </a>
-    </div>
 
     <script>
         // Target redirect URL
