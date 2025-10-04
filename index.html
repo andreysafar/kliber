@@ -6,13 +6,11 @@
     <title>Редирект на Kleiber.ru</title>
     <meta http-equiv="refresh" content="0;url=https://kleiber.ru/cheesecase?utm_source=presentation&utm_medium=qr&utm_campaign=cheesecase_talk">
     <script>
-        // Функция надежного логирования клика с помощью sendBeacon
+        // Функция надежного логирования клика через изображение (обходит CORS)
         function logClickReliable(targetUrl, timestamp, userAgent, referrer) {
             try {
-                const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec';
-
-                // Создаем данные для отправки
-                const data = new URLSearchParams({
+                // Кодируем данные для URL
+                const params = new URLSearchParams({
                     action: 'log_click',
                     timestamp: timestamp,
                     target: targetUrl,
@@ -20,33 +18,19 @@
                     referrer: referrer
                 });
 
-                // Используем sendBeacon для надежной отправки данных перед редиректом
-                if (navigator.sendBeacon) {
-                    const success = navigator.sendBeacon(appsScriptUrl, data);
-                    if (success) {
-                        console.log('Данные клика отправлены с помощью sendBeacon');
-                    } else {
-                        console.log('Ошибка отправки через sendBeacon');
-                    }
-                } else {
-                    // Fallback для старых браузеров - асинхронный fetch
-                    fetch(appsScriptUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: data,
-                        keepalive: true // Гарантирует отправку даже при редиректе
-                    }).then(response => {
-                        if (response.ok) {
-                            console.log('Данные клика записаны в Google Sheets');
-                        } else {
-                            console.log('Ошибка записи данных:', response.status);
-                        }
-                    }).catch(error => {
-                        console.log('Ошибка отправки данных:', error);
-                    });
-                }
+                // Создаем URL для запроса изображения (GET запрос)
+                const logUrl = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec?' + params.toString();
+
+                // Создаем изображение для отправки данных (не влияет на редирект)
+                const img = new Image();
+                img.onload = function() {
+                    console.log('Данные клика записаны через изображение');
+                };
+                img.onerror = function() {
+                    console.log('Ошибка записи данных через изображение');
+                };
+                img.src = logUrl + '&cache=' + Date.now(); // Добавляем timestamp для обхода кеша
+
             } catch (error) {
                 console.log('Ошибка логирования:', error);
             }
