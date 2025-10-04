@@ -23,18 +23,49 @@
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwexdrOMjpgMwEpX1mFffMhzO3USeM5yorjQk2Vrg71yiwFVHU/exec';
 ```
 
+### ⚠️ Важно: Обновление скрипта и ссылок
+
+**Если нужно изменить код Google Apps Script:**
+1. Открой Apps Script в Google Таблице
+2. Внеси изменения в код
+3. Сохрани (Ctrl+S)
+4. Перейди в **Развернуть → Управление развертываниями (Deploy → Manage deployments)**
+5. Нажми на иконку редактирования (карандаш) рядом с активным развертыванием
+6. Выбери **Новая версия** в выпадающем списке
+7. Нажми **Развернуть**
+8. URL остается тот же - менять в `index.html` ничего не нужно
+
+**Если нужно изменить SCRIPT_URL или REDIRECT_URL в index.html:**
+1. Измени нужные параметры в файле `index.html`
+2. Загрузи обновленный файл в свой GitHub репозиторий
+3. GitHub Pages обновится автоматически (может занять несколько минут)
+4. Если не обновляется - проверь Settings → Pages
+
 ### 3. Скачай файлы
-📁 **[index.html](https://github.com/andreysafar/kliber/blob/Prod/index.html)** - страница отслеживания
-📁 **[script.gs](https://github.com/andreysafar/kliber/blob/Prod/script.gs)** - код для Google Apps Script
+📁 **[index.html](https://github.com/andreysafar/kliber/blob/prod/index.html)** - страница отслеживания
+📁 **[script.gs](https://github.com/andreysafar/kliber/blob/prod/script.gs)** - код для Google Apps Script
 
 Или скопируй код напрямую:
-📋 **[index.html сырой код](https://raw.githubusercontent.com/andreysafar/kliber/Prod/index.html)**
-📋 **[script.gs сырой код](https://raw.githubusercontent.com/andreysafar/kliber/Prod/script.gs)**
+📋 **[index.html сырой код](https://raw.githubusercontent.com/andreysafar/kliber/prod/index.html)**
+📋 **[script.gs сырой код](https://raw.githubusercontent.com/andreysafar/kliber/prod/script.gs)**
 
-### 4. Готовая ссылка
-Используй: **`https://andreysafar.github.io/kliber/`** (эта ссылка уже работает сейчас)
+### 4. Создай свой GitHub Pages
 
-— Открывается минимальная страница, которая собирает данные и сразу перенаправляет.
+⚠️ **Важно:** Готовая ссылка `https://andreysafar.github.io/kliber/` работает только для демонстрации. Для реального использования создай свой репозиторий:
+
+1. **Создай новый репозиторий на GitHub**
+2. **Загрузи файл `index.html`** с твоим SCRIPT_URL
+3. **Включи GitHub Pages:**
+   - Settings → Pages
+   - Source: Deploy from a branch
+   - Branch: main (или master)
+   - Folder: / (root)
+4. **Получи свою ссылку:** `https://твой-username.github.io/название-репозитория/`
+
+**Почему нужен свой репозиторий:**
+- Можешь настроить свой SCRIPT_URL и REDIRECT_URL
+- Полный контроль над параметрами и настройками  
+- Не зависишь от изменений в чужом репозитории
 
 ## 📧 Что делает система
 
@@ -45,15 +76,17 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkrRaN1gI31JBKxXwex
 
 ## 🎨 Использование
 
-### Что уже настроено (работает из коробки)
+### Демо-версия (только для ознакомления)
 - Ссылка: `https://andreysafar.github.io/kliber/`
-- Отправка данных в таблицу через `SCRIPT_URL` (см. выше)
-- Email-уведомления на `anastasiyaanastasiya510@gmail.com`
+- Настроена для демонстрации работы системы
+- Email-уведомления идут автору проекта
 
-### Что можно поменять вручную
-- В `index.html` можно добавить свои параметры в ссылку (после `?`)
-- В `script.gs` можно изменить получателя писем в `EMAIL_TO`
-- Можно сократить длинные ссылки через Bitly/TinyURL и использовать их в QR
+### Для реального использования
+- **Создай свой GitHub Pages** (см. инструкцию выше)
+- В `index.html` настрой свой `SCRIPT_URL` и `REDIRECT_URL`
+- В `script.gs` измени получателя писем в `EMAIL_TO`
+- Можешь добавлять любые параметры в ссылку (после `?`)
+- Длинные ссылки можно сокращать через Bitly/TinyURL для QR-кодов
 
 ### Простая ссылка
 ```html
